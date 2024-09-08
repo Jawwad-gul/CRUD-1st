@@ -1,0 +1,16 @@
+﻿@model viewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="user-details container">
+	<p><strong>ID:</strong> @Model.user.Uid</p>
+	<p><strong>Name:</strong> @Model.user.Uname</p>
+	<p><strong>Password:</strong> @Model.user.Upass</p>
+	<p>
+		<strong>Role:</strong>
+		@foreach (var role in Model.user.Rids)
+		{
+			<span>@role.Rname ,</span>
+		}
+	</p>
+</div>

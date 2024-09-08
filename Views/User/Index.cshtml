@@ -1,0 +1,79 @@
+﻿@model IEnumerable<User>
+@{
+	ViewData["Title"] = "Index";
+}
+<div class="container p-3" style="height:80vh">
+	<div class="row pt-4">
+		<div class="col-6">
+			<h2 class="text-primary">Users List</h2>
+		</div>
+		<div class="col-6 text-end">
+			@* <a asp-controller="User" asp-action="Create" class="btn btn-primary">Create New User</a> *@
+			<button class="createNewUser btn btn-primary">Create New User</button>
+		</div>
+	</div>
+
+	<table class="table table-bordered table-stripped">
+		<thead>
+			<tr>
+				<th>User Name</th>
+				<th>User Password</th>
+				<th>User Role</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var obj in Model)
+			{
+				<tr>
+					<td width:"20%">
+						@obj.Uname
+					</td>
+					<td width:20%>
+						@obj.Upass
+					</td>
+					<td width:20%>
+						@{
+							var roles = string.Join(", ", obj.Rids.Select(r => r.Rname));
+						}
+						<span>@roles</span>
+					</td>
+					<td>
+						<div class="w-75 btn-group" role="group">
+							<a asp-controller="User" asp-route-id="@obj.Uid" asp-action="Edit" class="btn-secondary btn mx-2">Edit</a>
+							<a asp-controller="User" asp-route-id="@obj.Uid" asp-action="Delete" class="btn-danger btn mx-2">Delete</a>
+
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
+<div class="container p-3" style="width:50%">
+	@foreach (var user in Model)
+	{
+		<div class="user-row" style="display: flex; justify-content: space-between; align-items: center;">
+			<p style="margin: 0;">@user.Uname</p>
+			<button class="btn btn-secondary viewDetails" data-id="@user.Uid">Details</button>
+		</div>
+		<hr />
+	}
+</div>
+
+<div id="userDetailsPopup" style="display:none;">
+	<div id="userDetailsContent"></div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/userDetailsPopUp.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.createNewUser').on('click', function () {
+			window.location.href = "/User/Create";
+		})
+	})
+
+</script>
